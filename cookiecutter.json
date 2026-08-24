@@ -1,0 +1,34 @@
+{
+  "project_name": "My Course",
+  "project_slug": "{{ cookiecutter.project_name | slugify }}",
+  "project_description": "A course website and teaching material repository",
+  "course_code": "COURSE-101",
+  "semester": "2026 Fall",
+  "course_start_date": "2026-09-01",
+  "author_name": "Your Name",
+  "author_email": "you@example.com",
+  "copyright_year": "2026",
+  "language": [
+    "zh_CN",
+    "en"
+  ],
+  "site_url": "https://example.com/{{ cookiecutter.project_slug }}",
+  "accent_color": "#d95c41",
+  "python_version": "3.13",
+  "deploy_to_github_pages": [
+    "yes",
+    "no"
+  ],
+  "include_docker": [
+    "no",
+    "yes"
+  ],
+  "include_pdf": [
+    "no",
+    "yes"
+  ],
+  "initialize_git": [
+    "yes",
+    "no"
+  ]
+}

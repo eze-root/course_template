@@ -1,0 +1,11 @@
+[project]
+name = "course-cookiecutter"
+version = "0.1.0"
+description = "Cookiecutter template for reusable course websites"
+requires-python = ">=3.10"
+dependencies = [
+    "cookiecutter>=2.6,<3",
+]
+
+[tool.uv]
+package = false

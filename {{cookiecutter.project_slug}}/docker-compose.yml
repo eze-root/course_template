@@ -1,0 +1,8 @@
+services:
+  course-site:
+    build:
+      context: .
+    image: {{ cookiecutter.project_slug }}:latest
+    ports:
+      - "8080:80"
+    restart: unless-stopped

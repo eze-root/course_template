@@ -1,0 +1,21 @@
+[project]
+name = "{{ cookiecutter.project_slug }}"
+version = "0.1.0"
+description = {{ cookiecutter.project_description | tojson }}
+authors = [
+    { name = {{ cookiecutter.author_name | tojson }}, email = {{ cookiecutter.author_email | tojson }} },
+]
+readme = "README.md"
+requires-python = ">={{ cookiecutter.python_version }}"
+dependencies = [
+    "myst-parser>=4.0,<5",
+    "shibuya>=2026.7,<2027",
+    "sphinx>=8.2,<9",
+    "sphinx-autobuild>=2024.10,<2027",
+    "sphinx-copybutton>=0.5,<1",
+    "sphinx-design>=0.6,<1",
+    "sphinxemoji>=0.3,<1",
+]
+
+[tool.uv]
+package = false
