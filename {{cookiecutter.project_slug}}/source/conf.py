@@ -45,12 +45,17 @@ html_baseurl = {{ cookiecutter.site_url | tojson }}
 html_theme_options = {
     "accent_color": "tomato",
     "color_mode": "auto",
-    "globaltoc_expand_depth": 1,
+    # Two levels work better for chapter/section style course navigation while
+    # keeping deeply nested lecture headings collapsed by default.
+    "globaltoc_expand_depth": 2,
     "toctree_maxdepth": 3,
     "show_ai_links": False,
 }
 html_static_path = ["_static"]
-html_css_files = ["css/site.css"]
+html_css_files = [
+    "https://cdn.jsdelivr.net/npm/source-sans@3.52.0/source-sans-3VF.css",
+    "css/site.css",
+]
 html_logo = "_static/logo.svg"
 html_favicon = "_static/favicon.svg"
 

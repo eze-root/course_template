@@ -101,6 +101,30 @@ class CourseTemplateTests(unittest.TestCase):
         )
         self.assertIn('title: "Lecture 1: Introduction"', lecture)
 
+    def test_current_course_site_baseline_is_retained(self) -> None:
+        project = self.render(include_docker="yes")
+
+        conf = (project / "source/conf.py").read_text(encoding="utf-8")
+        self.assertIn("source-sans-3VF.css", conf)
+        self.assertIn('"globaltoc_expand_depth": 2', conf)
+
+        css = (project / "source/_static/css/src/site.css").read_text(
+            encoding="utf-8"
+        )
+        for expected in [
+            '"Source Sans 3 VF"',
+            "--course-globaltoc-width: 20rem",
+            ".yue table",
+            "div.admonition",
+            ".sy-breadcrumbs a",
+        ]:
+            self.assertIn(expected, css)
+
+        dockerfile = (project / "Dockerfile").read_text(encoding="utf-8")
+        self.assertIn("uv run --no-sync python -m sphinx", dockerfile)
+        self.assertIn("HEALTHCHECK", dockerfile)
+        self.assertNotIn("sphinx -M dirhtml source build -W", dockerfile)
+
 
 if __name__ == "__main__":
     unittest.main()

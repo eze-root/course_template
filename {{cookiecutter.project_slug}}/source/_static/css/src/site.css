@@ -8,80 +8,85 @@
 
 @theme {
   --color-course: {{ cookiecutter.accent_color }};
-  --font-sans: Inter, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", Georgia, serif;
-  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-sans: "Source Sans 3 VF", "Source Sans 3", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", SimSun, Georgia, "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }
 
 :root,
 html.light {
+  --course-globaltoc-width: 20rem;
   --course-accent: {{ cookiecutter.accent_color }};
   --course-accent-hover: color-mix(in srgb, var(--course-accent) 82%, black);
   --course-accent-soft: color-mix(in srgb, var(--course-accent) 12%, transparent);
   --course-canvas: #f8f7f2;
   --course-surface: #f2f0ea;
-  --course-ink: #242424;
-  --course-muted: #6f6f6f;
+  --course-code-bg: #f6f5f0;
+  --course-ink: #333333;
+  --course-muted: #757575;
 
   --sy-f-text: var(--font-sans);
   --sy-f-heading: var(--font-serif);
   --sy-f-mono: var(--font-mono);
   --sy-c-background: var(--course-canvas);
   --sy-c-surface: var(--course-surface);
-  --sy-c-divider: rgb(0 0 0 / 0.06);
-  --sy-c-border: rgb(0 0 0 / 0.1);
+  --sy-c-divider: rgb(0 0 0 / 0.05);
+  --sy-c-border: rgb(0 0 0 / 0.08);
   --sy-c-text: var(--course-ink);
   --sy-c-light: var(--course-muted);
-  --sy-c-bold: #161616;
-  --sy-c-heading: #161616;
+  --sy-c-bold: #1a1a1a;
+  --sy-c-heading: #1a1a1a;
   --sy-c-link: var(--course-accent);
   --sy-c-link-hover: var(--course-accent-hover);
+  --sy-c-background-dropback: rgb(248 247 242 / 0.85);
 
   --yue-c-text: var(--course-ink);
-  --yue-c-heading: #161616;
-  --yue-c-bold: #161616;
+  --yue-c-heading: #1a1a1a;
+  --yue-c-bold: #1a1a1a;
   --yue-c-link-1: var(--course-accent);
   --yue-c-link-2: var(--course-accent-hover);
   --yue-c-link-border: color-mix(in srgb, var(--course-accent) 45%, transparent);
   --yue-c-code-text: var(--course-accent-hover);
   --yue-c-code-background: var(--course-surface);
-  --yue-c-table-border: rgb(0 0 0 / 0.1);
+  --yue-c-table-border: rgb(0 0 0 / 0.08);
   --yue-c-th-background: var(--course-accent-soft);
-  --yue-c-th-border: rgb(0 0 0 / 0.1);
-  --yue-c-td-border: rgb(0 0 0 / 0.06);
+  --yue-c-th-border: rgb(0 0 0 / 0.08);
+  --yue-c-td-border: rgb(0 0 0 / 0.05);
   --yue-c-row-background: var(--course-surface);
 }
 
 html.dark {
-  --course-canvas: #191919;
+  --course-canvas: #1a1a1a;
   --course-surface: rgb(255 255 255 / 0.06);
-  --course-ink: #c6c6c6;
-  --course-muted: #919191;
+  --course-code-bg: rgb(255 255 255 / 0.04);
+  --course-ink: #b3b3b3;
+  --course-muted: #808080;
   --course-accent-hover: color-mix(in srgb, var(--course-accent) 78%, white);
   --course-accent-soft: color-mix(in srgb, var(--course-accent) 18%, transparent);
 
   --sy-c-background: var(--course-canvas);
   --sy-c-surface: var(--course-surface);
   --sy-c-divider: rgb(255 255 255 / 0.07);
-  --sy-c-border: rgb(255 255 255 / 0.11);
+  --sy-c-border: rgb(255 255 255 / 0.1);
   --sy-c-text: var(--course-ink);
   --sy-c-light: var(--course-muted);
-  --sy-c-bold: #ededed;
-  --sy-c-heading: #ededed;
+  --sy-c-bold: #e5e5e5;
+  --sy-c-heading: #e5e5e5;
   --sy-c-link: var(--course-accent-hover);
   --sy-c-link-hover: var(--course-accent);
+  --sy-c-background-dropback: rgb(26 26 26 / 0.85);
 
   --yue-c-text: var(--course-ink);
-  --yue-c-heading: #ededed;
-  --yue-c-bold: #ededed;
+  --yue-c-heading: #e5e5e5;
+  --yue-c-bold: #e5e5e5;
   --yue-c-link-1: var(--course-accent-hover);
   --yue-c-link-2: var(--course-accent);
   --yue-c-link-border: color-mix(in srgb, var(--course-accent) 55%, transparent);
   --yue-c-code-text: var(--course-accent-hover);
-  --yue-c-code-background: var(--course-surface);
-  --yue-c-table-border: rgb(255 255 255 / 0.11);
+  --yue-c-code-background: rgb(255 255 255 / 0.08);
+  --yue-c-table-border: rgb(255 255 255 / 0.1);
   --yue-c-th-background: var(--course-accent-soft);
-  --yue-c-th-border: rgb(255 255 255 / 0.11);
+  --yue-c-th-border: rgb(255 255 255 / 0.1);
   --yue-c-td-border: rgb(255 255 255 / 0.07);
   --yue-c-row-background: rgb(255 255 255 / 0.04);
 }
@@ -89,7 +94,7 @@ html.dark {
 body {
   font-family: var(--sy-f-text);
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.55;
   color: var(--sy-c-text);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -97,13 +102,15 @@ body {
 
 .yue {
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.65;
 }
 
 .yue h1,
 .yue h2,
 .yue h3,
-.yue h4 {
+.yue h4,
+.yue h5,
+.yue h6 {
   font-family: var(--sy-f-heading);
   letter-spacing: -0.01em;
   color: var(--sy-c-heading);
@@ -121,14 +128,18 @@ body {
 
 .yue h3 {
   font-size: 1.2rem;
-  font-weight: 650;
+  font-weight: 600;
+}
+
+.yue h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
 }
 
 @layer components {
   .sy-head {
-    background-color: color-mix(in srgb, var(--sy-c-background) 90%, transparent);
+    background-color: var(--sy-c-background);
     border-bottom: 1px solid var(--sy-c-border);
-    backdrop-filter: blur(12px);
   }
 
   .sy-head-brand {
@@ -142,7 +153,7 @@ body {
     width: auto;
     max-width: 10.5rem;
     max-height: 2.6rem;
-    color: var(--sy-c-heading);
+    object-fit: contain;
   }
 
   .sy-head-brand img + strong {
@@ -153,28 +164,43 @@ body {
   .localtoc > h3 {
     color: var(--sy-c-light);
     font-family: var(--sy-f-text);
-    font-size: 0.8rem;
-    font-weight: 650;
-    letter-spacing: 0.04em;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: none;
   }
 
-  .globaltoc a.current,
-  .globaltoc li.current > a,
-  .globaltoc a:hover,
+  .globaltoc a {
+    font-size: 0.9375rem;
+  }
+
+  .globaltoc > ul a.current,
+  .globaltoc li.current > a {
+    color: var(--sy-c-bold);
+    font-weight: 500;
+  }
+
+  .globaltoc > ul a:hover,
+  .globaltoc li > a:hover,
   .localtoc li.active > a,
   .localtoc a:hover {
     color: var(--sy-c-link);
   }
 
+  .localtoc a {
+    color: var(--sy-c-light);
+  }
+
   .yue a.reference.external,
   .yue a.reference.internal {
     color: var(--sy-c-link);
-    font-weight: 550;
-    text-decoration-color: color-mix(in srgb, var(--course-accent) 42%, transparent);
+    font-weight: 500;
+    text-decoration-color: color-mix(in srgb, var(--course-accent) 35%, transparent);
     text-underline-offset: 0.15em;
   }
 
-  .yue a.reference:hover {
+  .yue a.reference.external:hover,
+  .yue a.reference.internal:hover {
     color: var(--sy-c-link-hover);
     text-decoration-color: currentColor;
   }
@@ -182,27 +208,79 @@ body {
   .yue code.literal,
   .yue li > code,
   .yue p > code {
-    padding: 0.12rem 0.36rem;
-    border-radius: 0.3rem;
-    background: var(--yue-c-code-background);
     color: var(--yue-c-code-text);
+    background-color: var(--yue-c-code-background);
+    border-radius: 4px;
+    padding: 0.1rem 0.35rem;
     font-family: var(--sy-f-mono);
     font-size: 0.9em;
-    font-weight: 550;
+    font-weight: 500;
+  }
+
+  div.highlight {
+    border: 1px solid var(--sy-c-border);
+    border-radius: 10px;
+    background-color: var(--course-code-bg);
+    overflow: hidden;
+  }
+
+  div.highlight pre {
+    border-radius: 10px;
+    font-family: var(--sy-f-mono);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .highlight-copy-btn,
+  button.copybtn {
+    border-radius: 6px;
+  }
+
+  .yue table {
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .yue table thead th {
+    background-color: var(--yue-c-th-background);
+    color: var(--sy-c-bold);
+    font-weight: 600;
+  }
+
+  .yue table tbody tr:nth-child(even) {
+    background-color: var(--yue-c-row-background);
+  }
+
+  .yue table td,
+  .yue table th {
+    padding: 0.5rem 0.75rem;
+    border-color: var(--yue-c-td-border);
+  }
+
+  .yue .admonition,
+  div.admonition {
+    border: 1px solid var(--sy-c-border);
+    border-radius: 8px;
+    box-shadow: none;
+  }
+
+  .admonition-title {
+    font-weight: 600;
   }
 
   .sd-card {
     border: 1px solid var(--sy-c-border) !important;
-    border-radius: 0.8rem !important;
+    border-radius: 12px !important;
     background: color-mix(in srgb, var(--sy-c-surface) 82%, transparent) !important;
-    box-shadow: 0 1px 3px rgb(0 0 0 / 0.04);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.05);
     transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
   }
 
   .sd-card:hover {
     border-color: color-mix(in srgb, var(--course-accent) 50%, var(--sy-c-border)) !important;
-    box-shadow: 0 8px 24px rgb(0 0 0 / 0.07);
-    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.05);
+    transform: translateY(-1px);
   }
 
   .sd-card-title {
@@ -211,6 +289,32 @@ body {
     font-weight: 700;
   }
 
+  .sd-card .card-header,
+  .sd-card .card-footer {
+    background-color: var(--sy-c-surface);
+  }
+
+  .sd-badge {
+    border-radius: 999px;
+  }
+
+  .sd-tab-label {
+    border-radius: 8px 8px 0 0;
+  }
+
+  .article-info .sd-container-fluid,
+  div.sd-container-fluid.sd-outline-muted {
+    border: 1px solid var(--sy-c-divider);
+    border-radius: 8px;
+  }
+
+  .sy-breadcrumbs a {
+    color: var(--sy-c-light);
+  }
+
+  .sy-breadcrumbs a:hover {
+    color: var(--sy-c-link-hover);
+  }
 }
 
 .yue .toctree-wrapper.compound > ul {
@@ -223,4 +327,62 @@ body {
   display: list-item !important;
   margin: 0.2rem 0;
   list-style: disc outside !important;
+}
+
+html.dark div.admonition {
+  color: var(--sy-c-text);
+  background-color: rgb(255 255 255 / 0.02);
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sy-c-border) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--sy-c-border);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--sy-c-light);
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Long Chinese lecture titles need more room than Shibuya's default sidebar. */
+@media (min-width: 768px) {
+  .sy-page > .sy-lside {
+    width: var(--course-globaltoc-width);
+  }
+
+  .sy-page > .sy-main {
+    width: calc(100% - var(--course-globaltoc-width));
+    max-width: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --course-globaltoc-width: 24rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .sy-page > .sy-main {
+    width: calc(100% - var(--course-globaltoc-width) - 16rem);
+  }
 }
