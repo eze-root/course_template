@@ -16,12 +16,20 @@ def remove(path: str) -> None:
 
 
 if "{{ cookiecutter.deploy_to_github_pages }}" != "yes":
-    remove(".github")
+    remove(".github/workflows/pages.yml")
 
 if "{{ cookiecutter.include_docker }}" != "yes":
     remove("Dockerfile")
     remove("docker-compose.yml")
     remove(".dockerignore")
+    remove("docker-compose.traefik.yml")
+    remove(".env.example")
+    remove(".github/workflows/docker.yml")
+    remove("scripts/deploy.py")
+    remove("course_config.py")
+
+if not any((PROJECT_ROOT / ".github/workflows").iterdir()):
+    remove(".github")
 
 if "{{ cookiecutter.include_pdf }}" != "yes":
     remove("scripts/build_pdf.sh")

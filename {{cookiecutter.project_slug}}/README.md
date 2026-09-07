@@ -94,10 +94,55 @@ uv run bash scripts/build_pdf.sh
 ## Docker 部署
 
 ```bash
-docker compose up -d --build
+sudo docker compose up -d --build
 ```
 
-站点默认暴露在 <http://localhost:8080>。生产环境可在反向代理中接入该端口。
+本机预览为 <http://localhost:8080>，仅绑定回环地址。
+
+### Self-hosted Runner + Traefik
+
+项目已生成 `.github/workflows/docker.yml`：在 GitHub 托管 Runner 上严格构建、测试并构建镜像，通过后仅 `main` 的 push 在 self-hosted Linux Runner 部署。Runner 需安装 Python 3、Docker Compose，并允许免密码执行 `sudo docker`。
+
+在 GitHub **Settings → Environments → production** 中只需添加一个 Variable：
+
+```dotenv
+COURSE_DOMAIN=course.example.edu
+```
+
+可选 `COURSE_DATA_ROOT` 指定 Docker 宿主机上的绝对数据目录，不填则使用项目独立命名卷；可选 `COURSE_PORT` 修改本机诊断端口，默认 8080。宿主机绑定目录须提前创建，并对应用运行用户可写。
+
+Traefik 应已连接 `traefik_default` 网络，提供 `web`、`websecure` 入口，并持有域名对应证书或已配置入口级证书解析器。模板启用 TLS，但不创建证书解析器。
+
+```bash
+sudo docker network inspect traefik_default
+COURSE_DOMAIN=course.example.edu python3 scripts/deploy.py
+```
+
+`scripts/deploy.py` 校验输入后写入唯一的 0600 临时 env 文件，所有 Compose 命令使用 `sudo docker compose --env-file ...`，成功或失败都会清理文件。不会依赖 sudo 保留 Runner 环境变量，不会打印配置值。手动使用 `.env` 时执行：
+
+```bash
+cp .env.example .env
+# 编辑 .env 中的域名后执行：
+sudo docker compose --env-file .env -f docker-compose.yml -f docker-compose.traefik.yml up -d --build --wait
+```
+
+Docker 站点发布在域名根路径；生成时的 `site_url` 应与实际域名一致。网页和附件在镜像内，`/data` 不由 Nginx 对外提供。
+
+### 以后接入 Django
+
+当前模板仍为静态站，没有账号、上传接口或 Django 服务。`course_config.py` 为以后新增的 Django 后端提供公共配置；在后端 `settings.py` 中调用：
+
+```python
+from course_config import django_settings
+
+globals().update(django_settings())
+```
+
+只设置 `COURSE_DOMAIN` 即可推导 HTTPS、`ALLOWED_HOSTS` 和 CSRF 来源。生产密钥首次启动生成并原子保存到 `/data/.django-secret-key`，重复启动及多进程并发使用同一个值，无需手动配置 Django Secret。数据库为 `/data/course.sqlite3`，上传目录为 `/data/uploads/`。需同时备份数据库、密钥及上传目录。
+
+增加后端时还需自行添加 Django 依赖、应用、认证与上传路由，修改 Dockerfile 的运行入口和 Traefik 目标端口。容器内非 root 应用用户须能写入 `/data`；不要将私有上传目录挂到公开静态服务。切换已有数据卷前先迁移数据，不要重新生成已有密钥。
+
+旧项目可显式覆盖 `COURSE_DJANGO_SECRET_KEY`、`COURSE_PUBLIC_ORIGIN`、`COURSE_ALLOWED_HOSTS`、`COURSE_CSRF_TRUSTED_ORIGINS`、`COURSE_DB_PATH` 和 `COURSE_MEDIA_ROOT`。这些扩展变量需在后端 Compose 中显式传入容器；默认静态站工作流只接收域名、数据目录与诊断端口。Django 的子域通配写法是 `.example.edu`，不是 `*.example.edu`。本地后端开发可设置 `COURSE_DEBUG=1`，数据默认存入被 Git 忽略的 `data/`。
 
 {% endif -%}
 ## 提交前检查

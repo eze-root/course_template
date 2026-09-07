@@ -73,6 +73,10 @@
 {% endif -%}
 {% if cookiecutter.include_docker == "yes" -%}
 - Docker 只负责构建并托管静态站点；端口、域名和反向代理配置留在部署环境，不写入课程内容；
+- 所有 Docker 命令使用 `sudo docker`；生产部署统一运行 `python3 scripts/deploy.py`，通过 0600 临时 env 文件向 Compose 传参，不依赖 sudo 继承环境变量，不在日志输出密钥或完整 Compose 配置；
+- GitHub production Environment 默认只要求 `COURSE_DOMAIN`；数据目录与诊断端口为可选配置。以域名推导 HTTPS、允许主机和 CSRF 来源，避免要求教师重复填写；
+- 若扩展 Django 后端，复用 `course_config.py`，将数据库、上传文件与首次生成的密钥保存在 `/data` 持久卷；已有生产密钥不得每次部署重新生成，私有上传不得作为公开静态资源；
+- 部署变更须运行 `sudo docker compose --env-file .env.example -f docker-compose.yml -f docker-compose.traefik.yml config --quiet`，并检查镜像构建；
 {% endif -%}
 - 部署失败先读取构建日志并定位根因，不通过反复推送试错。
 

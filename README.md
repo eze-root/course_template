@@ -209,10 +209,18 @@ uv run python -m unittest discover -s tests -v
 生成时选择 `include_docker=yes`：
 
 ```bash
-docker compose up -d --build
+sudo docker compose up -d --build
 ```
 
 默认访问 <http://localhost:8080>。
+
+同时生成 self-hosted Docker 工作流和 Traefik 配置。在新课程仓库的 `production` Environment 中只需一个变量 `COURSE_DOMAIN=course.example.edu`；`COURSE_DATA_ROOT`（宿主机数据目录）和 `COURSE_PORT`（默认 8080）可选。`main` 的 push 通过构建测试后自动部署；PR 仅在 GitHub 托管 Runner 验证。
+
+Runner 需 Python 3、Docker Compose、免密码 `sudo docker` 权限。服务器已有 Traefik `web` / `websecure` 入口、`traefik_default` 网络及对应 HTTPS 证书。部署脚本通过临时 0600 env 文件向 `sudo docker compose --env-file` 传参，避免 Actions 有变量而 Compose 报变量缺失；支持 `$`、`#`、空格和单引号，并在执行结束后清理。
+
+静态站不要求 Django 变量。模板附带 `course_config.py`，供以后增加 Django 后端使用：单个域名推导 HTTPS、允许主机与 CSRF 来源，密钥首次生成后持久保存在 `/data/.django-secret-key`，数据库和上传目录也位于 `/data`。这不是现成的 Django 账号或上传系统，接入方式见生成项目 README。已有后端可保留显式密钥等覆盖配置。
+
+新配置只影响此后生成的课程。已有项目需复制部署脚本、工作流、Compose 和配置模块，并按自身服务名、运行端口适配；不会自动修改已运行的课程服务器。
 
 ### PDF
 

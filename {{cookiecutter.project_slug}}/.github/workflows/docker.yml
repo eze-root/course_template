@@ -1,0 +1,45 @@
+name: Docker course site
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build and test
+        run: |
+          uv sync
+          npm install
+          uv run make dirhtml SPHINXOPTS="-W --keep-going"
+          uv run python -m unittest discover -s tests -v
+      - name: Validate production Compose
+        run: sudo docker compose --env-file .env.example -f docker-compose.yml -f docker-compose.traefik.yml config --quiet
+      - name: Build image
+        run: sudo docker compose build
+
+  deploy:
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, linux]
+    environment: production
+    concurrency:
+      group: {{ cookiecutter.project_slug }}-production
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy through Traefik
+        env:
+          COURSE_DOMAIN: {% raw %}${{ vars.COURSE_DOMAIN }}{% endraw %}
+          COURSE_DATA_ROOT: {% raw %}${{ vars.COURSE_DATA_ROOT }}{% endraw %}
+          COURSE_PORT: {% raw %}${{ vars.COURSE_PORT }}{% endraw %}
+        run: python3 scripts/deploy.py

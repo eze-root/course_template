@@ -6,3 +6,7 @@ node_modules
 source/_static/pdfs
 docs
 tests
+.env
+.env.*
+data
+*.sqlite3*

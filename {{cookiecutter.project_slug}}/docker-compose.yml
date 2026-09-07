@@ -4,5 +4,12 @@ services:
       context: .
     image: {{ cookiecutter.project_slug }}:latest
     ports:
-      - "8080:80"
+      - "127.0.0.1:${COURSE_PORT:-8080}:80"
+    environment:
+      COURSE_DOMAIN: "${COURSE_DOMAIN:-localhost}"
+    volumes:
+      - "${COURSE_DATA_ROOT:-course-data}:/data"
     restart: unless-stopped
+
+volumes:
+  course-data:
